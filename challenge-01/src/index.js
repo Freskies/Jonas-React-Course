@@ -36,7 +36,7 @@ function Skills({ skills }) {
 	return (
 		<div className="skills">
 			{skills.map(skill => (
-				<Skill skill={skill} />
+				<Skill skill={skill} key={skill.longName} />
 			))}
 		</div>
 	);
