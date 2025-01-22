@@ -17,8 +17,7 @@ body {
 	background-color: #f7f2e9;
 	border-bottom: 1.6rem solid #edc84b;
 	min-height: 100vh;
-	padding: 3.2rem;
-	padding-bottom: 6rem;
+	padding: 3.2rem 3.2rem 6rem;
 }
 
 .container {
@@ -145,7 +144,7 @@ body {
 }
 
 .pizza.sold-out img {
-	filter: grayscale();
+	filter: grayscale(100%);
 	opacity: 0.8;
 }
 
