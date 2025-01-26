@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import PropTypes from "prop-types";
 
-function App() {
-  const [count, setCount] = useState(0)
+const initialItems = [
+	{ id: 1, description: "Passports", quantity: 2, packed: false },
+	{ id: 2, description: "Socks", quantity: 12, packed: true },
+	{ id: 3, description: "Charger", quantity: 12, packed: false },
+];
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+function App () {
+
+	return <div className="app">
+		<Logo/>
+		<Form/>
+		<PackingList/>
+		<Stats/>
+	</div>;
 }
 
-export default App
+function Logo () {
+	return <h1>🌴 Far Away 💼</h1>;
+}
+
+function Form () {
+	return <div className="add-form">
+		<h3>What do you need for your 😍 trip?</h3>
+	</div>;
+}
+
+function PackingList () {
+	return <div className="list">
+		<ul>{initialItems.map(item => <Item item={item} key={item.id}/>)}</ul>
+	</div>;
+}
+
+Item.propTypes = {
+	item: PropTypes.shape({
+		description: PropTypes.string.isRequired,
+		quantity: PropTypes.number.isRequired,
+		packed: PropTypes.bool.isRequired,
+	}).isRequired,
+};
+
+function Item ({ item: { quantity, description, packed } }) {
+	return <li className="item">
+		<span className={packed ? "packed" : ""}>
+			{quantity} {description}
+		</span>
+		<button>❌</button>
+	</li>;
+}
+
+function Stats () {
+	return <footer className="stats">
+		<em>You have X items on your list, and you already packed X (X%)</em>
+	</footer>;
+}
+
+export default App;
