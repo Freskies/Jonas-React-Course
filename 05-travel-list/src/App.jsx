@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 const initialItems = [
 	{ id: 1, description: "Passports", quantity: 2, packed: false },
@@ -21,9 +22,40 @@ function Logo () {
 }
 
 function Form () {
-	return <div className="add-form">
+	const [descriptionField, setDescriptionField] = useState("");
+	const [quantityField, setQuantityField] = useState(1);
+
+	function handleSubmit (e) {
+		e.preventDefault();
+		if (!descriptionField) return;
+
+		const newItem = {
+			description: descriptionField,
+			quantity: quantityField,
+			packed: false,
+			id: Date.now()
+		}
+
+		setDescriptionField("");
+		setQuantityField(1);
+		console.log(newItem);
+	}
+
+	return <form className="add-form" onSubmit={handleSubmit}>
 		<h3>What do you need for your 😍 trip?</h3>
-	</div>;
+		<select value={quantityField} onChange={e => setQuantityField(+e.target.value)}>
+			{Array.from({ length: 20 }, (_, i) => i + 1).map(
+				n => <option value={n + ""} key={n + ""}>{n}</option>,
+			)}
+		</select>
+		<input
+			type="text"
+			placeholder="Item..."
+			value={descriptionField}
+			onChange={e => setDescriptionField(e.target.value)}
+		/>
+		<button>Add</button>
+	</form>;
 }
 
 function PackingList () {
