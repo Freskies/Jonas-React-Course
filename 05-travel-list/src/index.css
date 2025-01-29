@@ -34,6 +34,14 @@ h1 {
 	word-spacing: 30px;
 	letter-spacing: -5px;
 	padding: 2.4rem 0;
+	display: flex;
+	gap: 1.8rem;
+	justify-content: center;
+	align-items: center;
+}
+
+h1 > span {
+	transform: scale(1.2) translateY(-0.8rem);
 }
 
 .add-form {
