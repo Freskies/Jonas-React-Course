@@ -21,6 +21,14 @@ const faqs = [
 		title: "What is state in React?",
 		text: "State is an object that determines how a component renders and behaves.",
 	},
+	{
+		title: "Can I use JSX?",
+		jsx: <ul>
+			<li>YES</li>
+			<li>SURE</li>
+			<li>DEFINITELY</li>
+		</ul>
+	}
 ];
 
 export default function App () {
