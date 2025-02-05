@@ -16,6 +16,17 @@ export default function App () {
 		setSelectedFriend((selectedFriend) => selectedFriend === friend ? null : friend);
 	}
 
+	function handleSplitBill (friendId, balance) {
+		setFriendList(friendList =>
+			friendList.map(friend =>
+				friend.id === friendId
+					? {...friend, balance: friend.balance + balance}
+					: friend
+			)
+		)
+		setSelectedFriend(null);
+	}
+
 	const activeFriend = friendList.find(({ id }) => id === selectedFriend);
 
 	return <div className="app">
@@ -27,6 +38,6 @@ export default function App () {
 			/>
 			<FormAddFriend onAddFriend={handleAddFriend}></FormAddFriend>
 		</div>
-		{selectedFriend && <FormSplitBuild friend={activeFriend}></FormSplitBuild>}
+		{selectedFriend && <FormSplitBuild friend={activeFriend} onSplitBill={handleSplitBill}></FormSplitBuild>}
 	</div>;
 }

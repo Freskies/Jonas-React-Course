@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="885a57fd-d7be-48d6-9ced-c9a45eef171a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/FormSplitBuild.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/FormSplitBuild.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +79,7 @@
       <option name="presentableId" value="Default" />
       <updated>1738667976041</updated>
       <workItem from="1738667977229" duration="2275000" />
-      <workItem from="1738743838755" duration="4932000" />
+      <workItem from="1738743838755" duration="7203000" />
     </task>
     <servers />
   </component>

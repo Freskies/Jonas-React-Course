@@ -1,11 +1,14 @@
 import { friendType } from "../Friends.js";
 import { useState } from "react";
+import PropTypes from "prop-types";
+import Button from "./Button.jsx";
 
 FormSplitBuild.propTypes = {
-	friend: friendType,
+	friend: friendType.isRequired,
+	onSplitBill: PropTypes.func.isRequired,
 };
 
-export default function FormSplitBuild ({ friend: { id, name, balance } }) {
+export default function FormSplitBuild ({ friend: { id, name }, onSplitBill }) {
 	const [bill, setBill] = useState("");
 	const [yourExpense, setYourExpense] = useState("");
 	const [friendExpense, setFriendExpense] = useState("");
@@ -15,7 +18,16 @@ export default function FormSplitBuild ({ friend: { id, name, balance } }) {
 		return bill >= expense ? expense : bill;
 	}
 
-	return <form className="form-split-bill">
+	function handleSubmit (e) {
+		e.preventDefault();
+		const okYourExpense = whoPays === "user" ? yourExpense : true;
+		const okFriendExpense = whoPays === "friend" ? friendExpense : true;
+		if (!bill || !okYourExpense || !okFriendExpense) return;
+
+		onSplitBill(id, whoPays === "user" ? bill - yourExpense : friendExpense - bill);
+	}
+
+	return <form className="form-split-bill" onSubmit={handleSubmit}>
 		<h2>Split a bill with {name}</h2>
 
 		<label htmlFor="10">💰 Bill value</label>
@@ -53,5 +65,7 @@ export default function FormSplitBuild ({ friend: { id, name, balance } }) {
 			<option value="user">You</option>
 			<option value="friend">{name}</option>
 		</select>
+
+		<Button>Split Bill</Button>
 	</form>;
 }
