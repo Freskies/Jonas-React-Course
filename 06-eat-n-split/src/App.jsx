@@ -6,16 +6,27 @@ import { useState } from "react";
 
 export default function App () {
 	const [friendList, setFriendList] = useState(initialFriends);
+	const [selectedFriend, setSelectedFriend] = useState(null);
 
 	function handleAddFriend (friend) {
-		setFriendList((friendList) => [...friendList, friend])
+		setFriendList((friendList) => [...friendList, friend]);
 	}
+
+	function handleSelectFriend (friend) {
+		setSelectedFriend((selectedFriend) => selectedFriend === friend ? null : friend);
+	}
+
+	const activeFriend = friendList.find(({ id }) => id === selectedFriend);
 
 	return <div className="app">
 		<div className="sidebar">
-			<FriendsList friends={friendList}/>
+			<FriendsList
+				friends={friendList}
+				selectedFriend={selectedFriend}
+				onSelectFriend={handleSelectFriend}
+			/>
 			<FormAddFriend onAddFriend={handleAddFriend}></FormAddFriend>
 		</div>
-		<FormSplitBuild></FormSplitBuild>
+		{selectedFriend && <FormSplitBuild friend={activeFriend}></FormSplitBuild>}
 	</div>;
 }
