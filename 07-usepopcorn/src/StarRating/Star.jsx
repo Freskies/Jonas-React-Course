@@ -1,11 +1,12 @@
-const starStyle = {
-	width: "48px",
-	height: "48px",
-	display: "block",
-	cursor: "pointer",
-};
+export default function Star ({ onClick, onMouseEnter, onMouseLeave, children, color, size }) {
+	const starStyle = {
+		width: size,
+		height: size,
+		display: "block",
+		cursor: "pointer",
+		color,
+	};
 
-export default function Star ({ onClick, onMouseEnter, onMouseLeave, children }) {
 	return <span
 		style={starStyle}
 		role="button"

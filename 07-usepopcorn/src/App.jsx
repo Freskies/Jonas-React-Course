@@ -16,13 +16,13 @@ export default function App () {
 
 	return <>
 		<NavBar>
-			<Logo />
-			<Search />
-			<NumResults movieLength={movies.length} />
+			<Logo/>
+			<Search/>
+			<NumResults movieLength={movies.length}/>
 		</NavBar>
 		<Main>
 			<Box>
-				<MovieList movies={movies} />
+				<MovieList movies={movies}/>
 			</Box>
 			<Box>
 				<WatchedSummary watched={watched}/>
