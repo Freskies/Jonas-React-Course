@@ -35,7 +35,7 @@ export default function StarRating ({
                                     }) {
 	if (maxRating < 1) throw new Error("maxRating must be greater than 0");
 	if (defaultRating < 0 && defaultRating > maxRating) throw new Error("defaultRating must be between 0 and maxRating");
-	
+
 	function handleSetRating (rating) {
 		setRating(rating);
 		onSetRating?.(rating);
