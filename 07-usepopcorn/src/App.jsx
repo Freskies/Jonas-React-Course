@@ -26,15 +26,18 @@ function ErrorMessage ({ message }) {
 }
 
 export default function App () {
+	// movies
 	const [movies, setMovies] = useState([]);
 	const [watched] = useState([]);
+	// search
+	const [query, setQuery] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
-	const [query, setQuery] = useState("");
 
 	async function fetchMovies (query) {
 		setIsLoading(true);
-		const res = await fetch(`${OMDB_BASE_URL}?apikey=${OMDB_KEY}&s=${query}`);
+		setError("");
+		const res = await fetch(`${OMDB_BASE_URL}/?apikey=${OMDB_KEY}&s=${query}`);
 		if (res.ok) {
 			const data = await res.json();
 			if (data.Response === "True") setMovies(data.Search);
@@ -44,6 +47,11 @@ export default function App () {
 	}
 
 	useEffect(() => {
+		if (query.length < 3) {
+			setMovies([]);
+			setError("");
+			return;
+		}
 		fetchMovies(query);
 	}, [query]);
 
@@ -56,7 +64,7 @@ export default function App () {
 		<Main>
 			<Box>
 				{isLoading && <Loader/>}
-				{isLoading && !error && <MovieList movies={movies}/>}
+				{!isLoading && !error && <MovieList movies={movies}/>}
 				{error && <ErrorMessage message={error}/>}
 			</Box>
 			<Box>
