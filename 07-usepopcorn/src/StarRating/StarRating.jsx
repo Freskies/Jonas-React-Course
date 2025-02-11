@@ -4,6 +4,8 @@ import FullStar from "./FullStar.jsx";
 import EmptyStar from "./EmptyStar.jsx";
 import PropTypes from "prop-types";
 
+const DEFAULT_SIZE = 48;
+
 const containerStyle = {
 	display: "flex",
 	alignItems: "center",
@@ -22,17 +24,17 @@ StarRating.propTypes = {
 	messages: PropTypes.arrayOf(PropTypes.string),
 	defaultRating: PropTypes.number,
 	onSetRating: PropTypes.func,
-}
+};
 
 export default function StarRating ({
-	                                    maxRating = 5,
-	                                    color = "#fcc419",
-	                                    size = 48,
-	                                    className = "",
-	                                    messages = [],
-	                                    defaultRating = 0,
-	                                    onSetRating,
-                                    }) {
+	maxRating = 5,
+	color = "#fcc419",
+	size = DEFAULT_SIZE,
+	className = "",
+	messages = [],
+	defaultRating = 0,
+	onSetRating,
+}) {
 	if (maxRating < 1) throw new Error("maxRating must be greater than 0");
 	if (defaultRating < 0 && defaultRating > maxRating) throw new Error("defaultRating must be between 0 and maxRating");
 
@@ -45,7 +47,7 @@ export default function StarRating ({
 		lineHeight: "1",
 		margin: "0",
 		color,
-		fontSize: `${size * .5}px`,
+		fontSize: `${size * 0.5}px`,
 	};
 
 	const [rating, setRating] = useState(defaultRating);

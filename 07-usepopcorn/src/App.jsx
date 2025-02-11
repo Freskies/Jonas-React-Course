@@ -30,7 +30,7 @@ export default function App () {
 	const [watched] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
-	const query = "interstellar";
+	const [query, setQuery] = useState("");
 
 	async function fetchMovies (query) {
 		setIsLoading(true);
@@ -50,7 +50,7 @@ export default function App () {
 	return <>
 		<NavBar>
 			<Logo/>
-			<Search/>
+			<Search query={query} setQuery={setQuery}/>
 			<NumResults movieLength={movies.length}/>
 		</NavBar>
 		<Main>

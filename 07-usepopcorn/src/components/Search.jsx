@@ -1,8 +1,11 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 
-export default function Search () {
-	const [query, setQuery] = useState("");
+Search.propTypes = {
+	query: PropTypes.string.isRequired,
+	setQuery: PropTypes.func.isRequired,
+};
 
+export default function Search ({ query, setQuery }) {
 	return <input
 		className="search"
 		type="text"
