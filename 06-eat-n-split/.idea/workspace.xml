@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="885a57fd-d7be-48d6-9ced-c9a45eef171a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/FormSplitBuild.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/FormSplitBill.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../07-usepopcorn/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../07-usepopcorn/src/main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../08-how-react-works/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/../08-how-react-works/node_modules/.cache/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../08-how-react-works/node_modules/.cache/default-development/1.pack" beforeDir="false" afterPath="$PROJECT_DIR$/../08-how-react-works/node_modules/.cache/default-development/1.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../08-how-react-works/node_modules/.cache/default-development/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/../08-how-react-works/node_modules/.cache/default-development/index.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../08-how-react-works/node_modules/.cache/default-development/index.pack.old" beforeDir="false" afterPath="$PROJECT_DIR$/../08-how-react-works/node_modules/.cache/default-development/index.pack.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../08-how-react-works/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../08-how-react-works/src/App.js" afterDir="false" />
-    </list>
+    <list default="true" id="885a57fd-d7be-48d6-9ced-c9a45eef171a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -86,7 +76,7 @@
       <updated>1738667976041</updated>
       <workItem from="1738667977229" duration="2275000" />
       <workItem from="1738743838755" duration="7373000" />
-      <workItem from="1739263259109" duration="269000" />
+      <workItem from="1739263259109" duration="322000" />
     </task>
     <servers />
   </component>
