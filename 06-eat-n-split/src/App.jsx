@@ -1,7 +1,7 @@
 import FriendsList from "./Components/FriendsList.jsx";
 import { initialFriends } from "./Friends.js";
 import FormAddFriend from "./Components/FormAddFriend.jsx";
-import FormSplitBuild from "./Components/FormSplitBuild.jsx";
+import FormSplitBill from "./Components/FormSplitBill.jsx";
 import { useState } from "react";
 
 export default function App () {
@@ -38,6 +38,12 @@ export default function App () {
 			/>
 			<FormAddFriend onAddFriend={handleAddFriend}></FormAddFriend>
 		</div>
-		{selectedFriend && <FormSplitBuild friend={activeFriend} onSplitBill={handleSplitBill}></FormSplitBuild>}
+		{selectedFriend &&
+			<FormSplitBill
+				key={activeFriend.id}
+				friend={activeFriend}
+				onSplitBill={handleSplitBill}
+			/>
+		}
 	</div>;
 }
