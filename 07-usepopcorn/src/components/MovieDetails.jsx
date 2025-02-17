@@ -87,11 +87,24 @@ function Movie ({
 }) {
 	const [userRating, setUserRating] = useState(0);
 
-	useEffect(() => {
+	function setTitleEffect () {
 		if (!title) return;
 		document.title = `Movie | ${title}`;
 		return () => document.title = "usePopcorn";
-	}, [title]);
+	}
+
+	function listenEscEffect () {
+		function callback (e) {
+			if (e.code === "Escape") onCloseMovie();
+		}
+
+		document.addEventListener("keydown", callback);
+		return () => document.removeEventListener("keydown", callback);
+	}
+
+	useEffect(setTitleEffect, [title]);
+
+	useEffect(listenEscEffect, [onCloseMovie]);
 
 	function handleAdd () {
 		const newWatchedMovie = {

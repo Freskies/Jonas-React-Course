@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import NavBar from "./components/NavBar.jsx";
 import Main from "./components/Main.jsx";
 import Search from "./components/Search.jsx";
@@ -31,6 +31,18 @@ export default function App () {
 	const [error, setError] = useState("");
 	// selected
 	const [selectedId, setSelectedId] = useState(null);
+
+	function handleSetQuery (query) {
+		setQuery(query);
+		if (query.length < 3) {
+			setMovies([]);
+			setError("");
+			return;
+		}
+		const controller = new AbortController();
+		fetchMovies(query, controller.signal).catch(() => null);
+		return () => controller.abort();
+	}
 
 	function handleSelectMovie (id) {
 		if (id === selectedId) setSelectedId(null);
@@ -69,21 +81,10 @@ export default function App () {
 		setIsLoading(false);
 	}
 
-	useEffect(() => {
-		if (query.length < 3) {
-			setMovies([]);
-			setError("");
-			return;
-		}
-		const controller = new AbortController();
-		fetchMovies(query, controller.signal).catch(() => null);
-		return () => controller.abort();
-	}, [query]);
-
 	return <>
 		<NavBar>
 			<Logo/>
-			<Search query={query} setQuery={setQuery}/>
+			<Search query={query} onSetQuery={handleSetQuery}/>
 			<NumResults movieLength={movies.length}/>
 		</NavBar>
 		<Main>
