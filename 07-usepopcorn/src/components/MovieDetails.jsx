@@ -24,9 +24,9 @@ export default function MovieDetails ({
 	const [movie, setMovie] = useState({});
 	const [isLoading, setIsLoading] = useState(false);
 
-	async function fetchMovieDetails (id) {
+	async function fetchMovieDetails (id, signal) {
 		setIsLoading(true);
-		const res = await fetch(`${OMDB_BASE_URL}?apikey=${OMDB_KEY}&i=${id}`);
+		const res = await fetch(`${OMDB_BASE_URL}?apikey=${OMDB_KEY}&i=${id}`, { signal });
 		if (res.ok) {
 			const data = await res.json();
 			if (data.Response === "True") setMovie(data);
@@ -35,7 +35,9 @@ export default function MovieDetails ({
 	}
 
 	useEffect(() => {
-		fetchMovieDetails(selectedId);
+		const controller = new AbortController();
+		fetchMovieDetails(selectedId, controller.signal).catch(() => null);
+		return () => controller.abort();
 	}, [selectedId]);
 
 	return <div className="details" key={`movieDetails-${selectedId}`}>
@@ -84,6 +86,12 @@ function Movie ({
 	getRatingOfWatchedMovie,
 }) {
 	const [userRating, setUserRating] = useState(0);
+
+	useEffect(() => {
+		if (!title) return;
+		document.title = `Movie | ${title}`;
+		return () => document.title = "usePopcorn";
+	}, [title]);
 
 	function handleAdd () {
 		const newWatchedMovie = {

@@ -57,10 +57,10 @@ export default function App () {
 		setWatched(watched => watched.filter(({ imdbID }) => imdbID !== id));
 	}
 
-	async function fetchMovies (query) {
+	async function fetchMovies (query, signal) {
 		setIsLoading(true);
 		setError("");
-		const res = await fetch(`${OMDB_BASE_URL}/?apikey=${OMDB_KEY}&s=${query}`);
+		const res = await fetch(`${OMDB_BASE_URL}/?apikey=${OMDB_KEY}&s=${query}`, { signal });
 		if (res.ok) {
 			const data = await res.json();
 			if (data.Response === "True") setMovies(data.Search);
@@ -75,7 +75,9 @@ export default function App () {
 			setError("");
 			return;
 		}
-		fetchMovies(query);
+		const controller = new AbortController();
+		fetchMovies(query, controller.signal).catch(() => null);
+		return () => controller.abort();
 	}, [query]);
 
 	return <>
