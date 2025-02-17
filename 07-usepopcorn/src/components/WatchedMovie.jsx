@@ -2,18 +2,24 @@ import PropTypes from "prop-types";
 
 WatchedMovie.propTypes = {
 	movie: PropTypes.shape({
-		Poster: PropTypes.string.isRequired,
-		Title: PropTypes.string.isRequired,
-		imdbRating: PropTypes.string.isRequired,
-		userRating: PropTypes.string.isRequired,
-		runtime: PropTypes.string.isRequired,
+		imdbID: PropTypes.string.isRequired,
+		poster: PropTypes.string.isRequired,
+		title: PropTypes.string.isRequired,
+		year: PropTypes.string.isRequired,
+		imdbRating: PropTypes.number.isRequired,
+		userRating: PropTypes.number.isRequired,
+		runtime: PropTypes.number.isRequired,
 	}).isRequired,
+	onDeleteWatchedMovie: PropTypes.func.isRequired,
 };
 
-export default function WatchedMovie ({ movie: { Poster, Title, imdbRating, userRating, runtime } }) {
+export default function WatchedMovie ({
+	movie: { imdbID, poster, title, year, imdbRating, userRating, runtime },
+	onDeleteWatchedMovie,
+}) {
 	return <li>
-		<img src={Poster} alt={`${Title} poster`}/>
-		<h3>{Title}</h3>
+		<img src={poster} alt={`${title} poster`}/>
+		<h3>{title}</h3>
 		<div>
 			<p>
 				<span>⭐️</span>
@@ -27,6 +33,7 @@ export default function WatchedMovie ({ movie: { Poster, Title, imdbRating, user
 				<span>⏳</span>
 				<span>{runtime} min</span>
 			</p>
+			<div className="btn-delete" onClick={() => onDeleteWatchedMovie(imdbID)}>X</div>
 		</div>
 	</li>;
 }

@@ -9,13 +9,9 @@ import MovieList from "./components/MovieList.jsx";
 import WatchedSummary from "./components/WatchedSummary.jsx";
 import WatchedList from "./components/WatchedList.jsx";
 import PropTypes from "prop-types";
-
-const OMDB_KEY = "33d4be54";
-const OMDB_BASE_URL = "https://www.omdbapi.com";
-
-function Loader () {
-	return <p className="loader">LOADING...</p>;
-}
+import MovieDetails from "./components/MovieDetails.jsx";
+import Loader from "./components/Loader.jsx";
+import { OMDB_BASE_URL, OMDB_KEY } from "./config.js";
 
 ErrorMessage.propTypes = {
 	message: PropTypes.string.isRequired,
@@ -28,11 +24,38 @@ function ErrorMessage ({ message }) {
 export default function App () {
 	// movies
 	const [movies, setMovies] = useState([]);
-	const [watched] = useState([]);
+	const [watched, setWatched] = useState([]);
 	// search
 	const [query, setQuery] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
+	// selected
+	const [selectedId, setSelectedId] = useState(null);
+
+	function handleSelectMovie (id) {
+		if (id === selectedId) setSelectedId(null);
+		else setSelectedId(id);
+	}
+
+	function handleCloseMovie () {
+		setSelectedId(null);
+	}
+
+	function handleAddWatched (movie) {
+		setWatched(watched => [...watched, movie]);
+	}
+
+	function isInWatchedList (id) {
+		return watched.some(({ imdbID }) => imdbID === id);
+	}
+
+	function getRatingOfWatchedMovie (id) {
+		return watched.find(({ imdbID }) => imdbID === id)?.userRating;
+	}
+
+	function handleDeleteWatchedMovie (id) {
+		setWatched(watched => watched.filter(({ imdbID }) => imdbID !== id));
+	}
 
 	async function fetchMovies (query) {
 		setIsLoading(true);
@@ -64,12 +87,22 @@ export default function App () {
 		<Main>
 			<Box>
 				{isLoading && <Loader/>}
-				{!isLoading && !error && <MovieList movies={movies}/>}
+				{!isLoading && !error && <MovieList movies={movies} onSelectMovie={handleSelectMovie}/>}
 				{error && <ErrorMessage message={error}/>}
 			</Box>
 			<Box>
-				<WatchedSummary watched={watched}/>
-				<WatchedList watched={watched}/>
+				{selectedId
+					? <MovieDetails
+						selectedId={selectedId}
+						onCloseMovie={handleCloseMovie}
+						onAddWatched={handleAddWatched}
+						isInWatchedList={isInWatchedList}
+						getRatingOfWatchedMovie={getRatingOfWatchedMovie}
+					/>
+					: <>
+						<WatchedSummary watched={watched}/>
+						<WatchedList watched={watched} onDeleteWatchedMovie={handleDeleteWatchedMovie}/>
+					</>}
 			</Box>
 		</Main>
 	</>;

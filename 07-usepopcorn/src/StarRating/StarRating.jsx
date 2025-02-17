@@ -57,7 +57,7 @@ export default function StarRating ({
 		<div style={starContainerStyle}>
 			{Array.from({ length: maxRating }, (_, i) =>
 				<Star
-					key={i}
+					key={`Star-${i}`}
 					onClick={() => handleSetRating(i + 1)}
 					onMouseEnter={() => setTempRating(i + 1)}
 					onMouseLeave={() => setTempRating(0)}
