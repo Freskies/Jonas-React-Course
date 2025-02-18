@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { OMDB_BASE_URL, OMDB_KEY } from "../config.js";
 import StarRating from "../StarRating/StarRating.jsx";
 import Loader from "./Loader.jsx";
@@ -86,6 +86,11 @@ function Movie ({
 	getRatingOfWatchedMovie,
 }) {
 	const [userRating, setUserRating] = useState(0);
+	const countRef = useRef(0);
+
+	useEffect(() => {
+		if (userRating) countRef.current++;
+	}, [userRating]);
 
 	function setTitleEffect () {
 		if (!title) return;
@@ -115,6 +120,7 @@ function Movie ({
 			imdbRating: Number(imdbRating),
 			userRating,
 			runtime: Number(runtime.split(" ").at(0)),
+			countRatingDecisions: countRef.current
 		};
 		onAddWatched(newWatchedMovie);
 		onCloseMovie();

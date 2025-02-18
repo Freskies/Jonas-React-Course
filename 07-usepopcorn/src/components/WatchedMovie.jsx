@@ -33,7 +33,7 @@ export default function WatchedMovie ({
 				<span>⏳</span>
 				<span>{runtime} min</span>
 			</p>
-			<div className="btn-delete" onClick={() => onDeleteWatchedMovie(imdbID)}>X</div>
 		</div>
+		<div className="btn-delete" onClick={() => onDeleteWatchedMovie(imdbID)}>X</div>
 	</li>;
 }

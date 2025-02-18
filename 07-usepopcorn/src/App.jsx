@@ -11,7 +11,8 @@ import WatchedList from "./components/WatchedList.jsx";
 import PropTypes from "prop-types";
 import MovieDetails from "./components/MovieDetails.jsx";
 import Loader from "./components/Loader.jsx";
-import { OMDB_BASE_URL, OMDB_KEY } from "./config.js";
+import { useMovies } from "./customHooks/useMovies.js";
+import { useLocalStorage } from "./customHooks/useLocalStorage.js";
 
 ErrorMessage.propTypes = {
 	message: PropTypes.string.isRequired,
@@ -22,27 +23,10 @@ function ErrorMessage ({ message }) {
 }
 
 export default function App () {
-	// movies
-	const [movies, setMovies] = useState([]);
-	const [watched, setWatched] = useState([]);
-	// search
 	const [query, setQuery] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState("");
-	// selected
+	const { movies, isLoading, error } = useMovies(query);
+	const [watched, setWatched] = useLocalStorage("watched");
 	const [selectedId, setSelectedId] = useState(null);
-
-	function handleSetQuery (query) {
-		setQuery(query);
-		if (query.length < 3) {
-			setMovies([]);
-			setError("");
-			return;
-		}
-		const controller = new AbortController();
-		fetchMovies(query, controller.signal).catch(() => null);
-		return () => controller.abort();
-	}
 
 	function handleSelectMovie (id) {
 		if (id === selectedId) setSelectedId(null);
@@ -69,22 +53,10 @@ export default function App () {
 		setWatched(watched => watched.filter(({ imdbID }) => imdbID !== id));
 	}
 
-	async function fetchMovies (query, signal) {
-		setIsLoading(true);
-		setError("");
-		const res = await fetch(`${OMDB_BASE_URL}/?apikey=${OMDB_KEY}&s=${query}`, { signal });
-		if (res.ok) {
-			const data = await res.json();
-			if (data.Response === "True") setMovies(data.Search);
-			else setError("Movie not found");
-		} else setError("Something went wrong with fetching movies");
-		setIsLoading(false);
-	}
-
 	return <>
 		<NavBar>
 			<Logo/>
-			<Search query={query} onSetQuery={handleSetQuery}/>
+			<Search query={query} onSetQuery={setQuery}/>
 			<NumResults movieLength={movies.length}/>
 		</NavBar>
 		<Main>
