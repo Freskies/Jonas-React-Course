@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { OMDB_BASE_URL, OMDB_KEY } from "../config.js";
 import StarRating from "../StarRating/StarRating.jsx";
 import Loader from "./Loader.jsx";
+import { useKeyDown } from "../customHooks/useKeyDown.js";
 
 MovieDetails.propTypes = {
 	selectedId: PropTypes.string.isRequired,
@@ -23,6 +24,7 @@ export default function MovieDetails ({
 }) {
 	const [movie, setMovie] = useState({});
 	const [isLoading, setIsLoading] = useState(false);
+	useKeyDown("Escape", onCloseMovie);
 
 	async function fetchMovieDetails (id, signal) {
 		setIsLoading(true);
@@ -68,8 +70,8 @@ Movie.propTypes = {
 		Director: PropTypes.string,
 		Genre: PropTypes.string,
 	}).isRequired,
-	onCloseMovie: PropTypes.func.isRequired,
 	onAddWatched: PropTypes.func.isRequired,
+	onCloseMovie: PropTypes.func.isRequired,
 	isInWatchedList: PropTypes.func.isRequired,
 	getRatingOfWatchedMovie: PropTypes.func.isRequired,
 };
@@ -80,8 +82,8 @@ function Movie ({
 		Title: title, Year: year, Poster: poster, Runtime: runtime, imdbRating, Plot: plot,
 		Released: released, Actors: actors, Director: director, Genre: genre,
 	},
-	onCloseMovie,
 	onAddWatched,
+	onCloseMovie,
 	isInWatchedList,
 	getRatingOfWatchedMovie,
 }) {
@@ -98,18 +100,7 @@ function Movie ({
 		return () => document.title = "usePopcorn";
 	}
 
-	function listenEscEffect () {
-		function callback (e) {
-			if (e.code === "Escape") onCloseMovie();
-		}
-
-		document.addEventListener("keydown", callback);
-		return () => document.removeEventListener("keydown", callback);
-	}
-
 	useEffect(setTitleEffect, [title]);
-
-	useEffect(listenEscEffect, [onCloseMovie]);
 
 	function handleAdd () {
 		const newWatchedMovie = {
@@ -120,7 +111,7 @@ function Movie ({
 			imdbRating: Number(imdbRating),
 			userRating,
 			runtime: Number(runtime.split(" ").at(0)),
-			countRatingDecisions: countRef.current
+			countRatingDecisions: countRef.current,
 		};
 		onAddWatched(newWatchedMovie);
 		onCloseMovie();

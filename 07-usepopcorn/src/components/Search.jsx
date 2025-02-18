@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
+import { useKeyDown } from "../customHooks/useKeyDown.js";
 
 Search.propTypes = {
 	query: PropTypes.string.isRequired,
@@ -9,27 +10,15 @@ Search.propTypes = {
 export default function Search ({ query, onSetQuery }) {
 
 	const inputElement = useRef(null);
+	useKeyDown("enter", setFocusOnSearchBar);
 
 	function setFocusOnSearchBar () {
+		if (document.activeElement === inputElement.current) return;
 		inputElement.current.focus();
+		onSetQuery("");
 	}
 
-	function listenEnterKeyEffect () {
-		function callback (e) {
-			if (document.activeElement === inputElement.current) return;
-			if (e.code === "Enter") {
-				setFocusOnSearchBar();
-				onSetQuery("");
-			}
-		}
-
-		document.addEventListener("keydown", callback);
-		return () => document.removeEventListener("keydown", callback);
-	}
-
-	useEffect(setFocusOnSearchBar, []);
-
-	useEffect(listenEnterKeyEffect, [onSetQuery]);
+	useEffect(setFocusOnSearchBar, [onSetQuery]);
 
 	return <input
 		className="search"
