@@ -1,45 +1,31 @@
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
+
+const initialState = { count: 0, step: 1 };
 
 function reducer (state, { type, payload }) {
 	switch (type) {
-		case "add":
-			return state + payload;
-		case "define":
-			return Number(payload);
+		case "inc":
+		case "dec": {
+			const { count, step } = state;
+			return { ...state, count: count + step };
+		}
+		case "setCount":
+			return { ...state, count: Number(payload) };
+		case "setStep":
+			return { ...state, step: Number(payload) };
 		case "reset":
+			return initialState;
 		default:
-			return 0;
+			throw new Error("Unknown action!");
 	}
 }
 
 function DateCounter () {
-	const [count, dispatch] = useReducer(reducer, 0);
-	const [step, setStep] = useState(1);
+	const [state, dispatch] = useReducer(reducer, initialState);
+	const { count, step } = state;
 
-	// This mutates the date object.
 	const date = new Date("june 21 2027");
 	date.setDate(date.getDate() + count);
-
-	const dec = function () {
-		dispatch({ type: "add", payload: -1 });
-	};
-
-	const inc = function () {
-		dispatch({ type: "add", payload: 1 });
-	};
-
-	const defineCount = function (e) {
-		dispatch({ type: "define", payload: e.target.value });
-	};
-
-	const defineStep = function (e) {
-		//setStep(Number(e.target.value));
-	};
-
-	const reset = function () {
-		dispatch({ type: "reset" });
-		setStep(1);
-	};
 
 	return (
 		<div className="counter">
@@ -49,21 +35,21 @@ function DateCounter () {
 					min="0"
 					max="10"
 					value={step}
-					onChange={defineStep}
+					onChange={e => dispatch({ type: "setStep", payload: e.target.value })}
 				/>
 				<span>{step}</span>
 			</div>
 
 			<div>
-				<button onClick={dec}>-</button>
-				<input value={count} onChange={defineCount}/>
-				<button onClick={inc}>+</button>
+				<button onClick={() => dispatch({ type: "dec" })}>-</button>
+				<input value={count} onChange={e => dispatch({ type: "setCount", payload: e.target.value })}/>
+				<button onClick={() => dispatch({ type: "inc" })}>+</button>
 			</div>
 
 			<p>{date.toDateString()}</p>
 
 			<div>
-				<button onClick={reset}>Reset</button>
+				<button onClick={() => dispatch({ type: "reset" })}>Reset</button>
 			</div>
 		</div>
 	);
