@@ -9,16 +9,16 @@ Question.propTypes = {
 		"points": PropTypes.number.isRequired,
 	}),
 	answer: PropTypes.number || null,
+	isAnswered: PropTypes.bool.isRequired,
 	dispatch: PropTypes.func.isRequired,
 };
 
 export default function Question ({
 	question: { question, options, correctOption, points },
 	answer,
+	isAnswered,
 	dispatch,
 }) {
-	const isAnswered = Boolean(answer);
-
 	function handleSelectOption (index) {
 		dispatch({ type: "newAnswer", payload: index });
 	}

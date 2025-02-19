@@ -25,12 +25,21 @@ export function reducer (state, { type, payload }) {
 				status: "active",
 			};
 		case "newAnswer": {
+			const { points: currentPoints } = state;
 			const { correctOption, points } = state.questions.at(state.index);
 			const isCorrect = correctOption === payload;
 			return {
 				...state,
 				answer: payload,
-				points: isCorrect ? state.points + points : state.points,
+				points: isCorrect ? currentPoints + points : currentPoints,
+			};
+		}
+		case "nextQuestion": {
+			const { index: currentIndex } = state;
+			return {
+				...state,
+				index: currentIndex + 1,
+				answer: null,
 			};
 		}
 		default:
