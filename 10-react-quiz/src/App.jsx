@@ -1,9 +1,13 @@
-import DateCounter from "./DateCounter.jsx";
+import Header from "./components/Header.jsx";
+import Main from "./components/Main.jsx";
 
 function App () {
-	return <div>
-		<DateCounter/>
-	</div>;
+	return <>
+		<Header/>
+		<Main>
+			<p>ciola</p>
+		</Main>
+	</>;
 }
 
 export default App;
