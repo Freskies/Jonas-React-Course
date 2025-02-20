@@ -4,6 +4,7 @@ export const initialState = {
 	index: 0,
 	answer: null,
 	points: 0,
+	highScore: 0,
 };
 
 export function reducer (state, { type, payload }) {
@@ -40,6 +41,22 @@ export function reducer (state, { type, payload }) {
 				...state,
 				index: currentIndex + 1,
 				answer: null,
+			};
+		}
+		case "finish": {
+			const { points, highScore } = state;
+			return {
+				...state,
+				status: "finished",
+				highScore: points > highScore ? points : highScore,
+			};
+		}
+		case "restartQuiz": {
+			const { questions } = state;
+			return {
+				...initialState,
+				questions,
+				status: "ready",
 			};
 		}
 		default:
