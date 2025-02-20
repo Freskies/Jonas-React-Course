@@ -10,9 +10,11 @@ import Question from "./components/Question.jsx";
 import Button from "./components/Button.jsx";
 import Progress from "./components/Progress.jsx";
 import FinishScreen from "./components/FinishScreen.jsx";
+import Timer from "./components/Timer.jsx";
 
 function App () {
-	const [{ status, questions, index, answer, points, highScore }, dispatch] = useReducer(reducer, initialState);
+	const [{ status, questions, index, answer, points, highScore, remainingSeconds }, dispatch] =
+		useReducer(reducer, initialState);
 	useQuestions(dispatch);
 
 	const isLoading = status === "loading";
@@ -53,7 +55,10 @@ function App () {
 					answer={answer} isAnswered={isAnswered}
 					dispatch={dispatch}
 				/>
-				{isAnswered && <Button action={buttonNextAction}>{buttonNextText}</Button>}
+				<footer>
+					<Timer dispatch={dispatch} remainingSeconds={remainingSeconds}></Timer>
+					{isAnswered && <Button action={buttonNextAction}>{buttonNextText}</Button>}
+				</footer>
 			</>}
 			{isFinished && <>
 				<FinishScreen

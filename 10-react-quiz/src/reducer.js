@@ -1,3 +1,5 @@
+const SECONDS_PER_QUESTION = 10;
+
 export const initialState = {
 	status: "loading", // loading, error, ready, active, finished
 	questions: [],
@@ -5,6 +7,7 @@ export const initialState = {
 	answer: null,
 	points: 0,
 	highScore: 0,
+	remainingSeconds: null,
 };
 
 export function reducer (state, { type, payload }) {
@@ -20,11 +23,14 @@ export function reducer (state, { type, payload }) {
 				...state,
 				status: "error",
 			};
-		case "start":
+		case "start": {
+			const { questions } = state;
 			return {
 				...state,
 				status: "active",
+				remainingSeconds: questions.length * SECONDS_PER_QUESTION,
 			};
+		}
 		case "newAnswer": {
 			const { points: currentPoints } = state;
 			const { correctOption, points } = state.questions.at(state.index);
@@ -59,6 +65,11 @@ export function reducer (state, { type, payload }) {
 				status: "ready",
 			};
 		}
+		case "setRemainingSeconds":
+			return {
+				...state,
+				remainingSeconds: payload,
+			};
 		default:
 			throw new Error("Unknown action type");
 	}
