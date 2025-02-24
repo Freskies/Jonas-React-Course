@@ -1,5 +1,7 @@
+import PageNav from "../components/PageNav.jsx";
+
 export default function Home () {
-	return <>
-		home
-	</>;
+	return <div>
+		<PageNav/>
+	</div>;
 };
