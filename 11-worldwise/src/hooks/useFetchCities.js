@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../config.js";
 
-export function useCities () {
+export function useFetchCities () {
 	const [cities, setCities] = useState([]);
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
