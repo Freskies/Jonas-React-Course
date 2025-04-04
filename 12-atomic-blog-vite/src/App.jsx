@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
-import { PostProvider, usePosts } from "./PostContext";
+import { PostProvider, usePosts } from "./PostContext.jsx";
+import Test from "./Test.jsx";
 
 function createRandomPost () {
 	return {
@@ -46,9 +47,9 @@ function Header () {
 			<span>⚛️</span>The Atomic Blog
 		</h1>
 		<div>
-			<Results/>;
-			<SearchPosts/>;
-			<button onClick={onClearPosts}>Clear posts</button>;
+			<Results/>
+			<SearchPosts/>
+			<button onClick={onClearPosts}>Clear posts</button>
 		</div>
 	</header>;
 }
@@ -119,7 +120,7 @@ function FormAddPost () {
 
 function List () {
 	const { posts } = usePosts();
-	return (
+	return <>
 		<ul>
 			{posts.map((post, i) => (
 				<li key={i}>
@@ -128,7 +129,8 @@ function List () {
 				</li>
 			))}
 		</ul>
-	);
+		<Test/>
+	</>;
 }
 
 function Archive () {
