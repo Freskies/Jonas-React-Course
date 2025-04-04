@@ -16,13 +16,13 @@ function formatDate (date) {
 
 export default function City () {
 	const { id } = useParams();
-	const { currentCityFetch: { currentCity, isLoading }, getCity } = useCities();
+	const { currentCity, isLoading, getCity } = useCities();
 
 	useEffect(() => {
 		getCity(id);
 	}, [id]);
 
-	if (isLoading) return <Spinner/>;
+	if (isLoading || !currentCity) return <Spinner/>;
 
 	const { cityName, emoji, date, notes } = currentCity;
 

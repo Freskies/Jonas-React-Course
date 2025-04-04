@@ -5,7 +5,7 @@ import Message from "./Message.jsx";
 import { useCities } from "../contexts/CitiesContext.jsx";
 
 export default function CityList () {
-	const { citiesFetch: { cities, isLoading, error } } = useCities();
+	const { cities, isLoading, error } = useCities();
 
 	if (isLoading) return <Spinner/>;
 	if (cities.error) return <Message message={error}/>;

@@ -9,7 +9,7 @@ import Button from "./Button.jsx";
 import { useUrlPosition } from "../hooks/useUrlPosition.js";
 
 export default function Map () {
-	const { citiesFetch: { cities } } = useCities();
+	const { cities } = useCities();
 	const [mapPosition, setMapPosition] = useState(["40", "0"]);
 	const { position: geolocationPosition, isLoadingPosition, getPosition } = useGeolocation();
 	const [lat, lng] = useUrlPosition();
