@@ -3,7 +3,7 @@ import CartOverview from "../features/cart/CartOverview.jsx";
 import { Outlet } from "react-router-dom";
 
 function AppLayout () {
-	return <div>
+	return <div className="layout">
 		<Header/>
 		<main>
 			<h1>Content</h1>
