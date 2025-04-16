@@ -3,9 +3,9 @@ import CartOverview from "../features/cart/CartOverview.jsx";
 import { Outlet } from "react-router-dom";
 
 function AppLayout () {
-	return <div className={`grid grid-rows-[auto_1fr_auto] h-[100dvh]`}>
+	return <div className={`grid grid-rows-[auto_1fr_auto] h-dvh font-pizza`}>
 		<Header/>
-		<main className={`overflow-auto max-w-3xl mx-auto`}>
+		<main className={`overflow-auto`}>
 			<Outlet/>
 		</main>
 		<CartOverview/>
