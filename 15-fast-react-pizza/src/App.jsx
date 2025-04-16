@@ -10,6 +10,7 @@ import Spinner from "./ui/Spinner.jsx";
 import Error from "./ui/Error.jsx";
 import orderLoader from "./features/order/orderLoader.js";
 import createOrderAction from "./features/order/createOrderAction.js";
+import createUserAction from "./features/user/createUserAction.js";
 
 const router = createBrowserRouter([
 	{
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
 			{
 				path: "/",
 				element: <Home/>,
+				action: createUserAction,
 			},
 			{
 				path: "/menu",

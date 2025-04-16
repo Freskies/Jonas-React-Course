@@ -1,5 +1,6 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import Button from "../../ui/Button.jsx";
+import { useSelector } from "react-redux";
 
 const fakeCart = [
 	{
@@ -33,6 +34,7 @@ function FieldContainer ({ children, label }) {
 }
 
 function CreateOrder () {
+	const username = useSelector(state => state.user.username);
 	const navigation = useNavigation();
 	const isSubmitting = navigation.state === "submitting";
 
@@ -46,7 +48,7 @@ function CreateOrder () {
 
 		<Form method="POST">
 			<FieldContainer label="First Name">
-				<input className="input grow" type="text" name="customer" required/>
+				<input className="input grow" type="text" name="customer" defaultValue={username} required/>
 			</FieldContainer>
 
 			<FieldContainer label="Phone number">
