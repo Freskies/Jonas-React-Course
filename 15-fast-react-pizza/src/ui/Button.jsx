@@ -11,9 +11,10 @@ const styles = {
 	text-stone-400 tracking-wide hover:text-stone-800 hover:bg-stone-300 transition-colors duration-300 cursor-pointer
 	focus:text-stone-800 focus:outline-none focus:ring focus:ring-stone-800 focus:bg-stone-300 focus:ring-offset-2
 	disabled:cursor-not-allowed text-sm`,
+	round: `rounded-full`,
 };
 
-function Button ({ disabled, children, to, type }) {
+function Button ({ disabled, children, to, type, onClick }) {
 	if (!styles[type]) throw new Error("Unknown button type!");
 
 	if (to)
@@ -22,6 +23,7 @@ function Button ({ disabled, children, to, type }) {
 	return <button
 		disabled={disabled}
 		className={styles[type]}
+		onClick={onClick}
 	>
 		{children}
 	</button>;
