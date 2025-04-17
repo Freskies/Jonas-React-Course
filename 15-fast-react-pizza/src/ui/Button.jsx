@@ -11,7 +11,7 @@ const styles = {
 	text-stone-400 tracking-wide hover:text-stone-800 hover:bg-stone-300 transition-colors duration-300 cursor-pointer
 	focus:text-stone-800 focus:outline-none focus:ring focus:ring-stone-800 focus:bg-stone-300 focus:ring-offset-2
 	disabled:cursor-not-allowed text-sm`,
-	round: `rounded-full`,
+	round: `${base} px-2.5 py-1 md:px-3.5 md:py-2 text-sm`,
 };
 
 function Button ({ disabled, children, to, type, onClick }) {
