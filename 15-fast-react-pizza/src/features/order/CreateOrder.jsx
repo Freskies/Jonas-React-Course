@@ -8,7 +8,7 @@ import { useState } from "react";
 import { fetchAddress } from "../user/userSlice.js";
 
 function FieldContainer ({ children, label }) {
-	return <div className={`mb-5 flex flex-col gap-2 sm:flex-row sm:items-center`}>
+	return <div className={`mb-5 flex flex-col gap-2 sm:flex-row sm:items-center relative`}>
 		<label className={"sm:basis-40"}>{label}</label>
 		{children}
 	</div>;
@@ -22,9 +22,11 @@ function priceWithPriority (total) {
 
 function CreateOrder () {
 	const dispatch = useDispatch();
-	const [withPriority, setWithPriority] = useState(false);
-	const username = useSelector(state => state.user.username);
 	const navigation = useNavigation();
+
+	const [withPriority, setWithPriority] = useState(false);
+	const { username, status: addressStatus, position, address } = useSelector(state => state.user);
+	const isLoadingAddress = addressStatus === "loading";
 	const isSubmitting = navigation.state === "submitting";
 
 	const formErrors = useActionData();
@@ -35,10 +37,13 @@ function CreateOrder () {
 
 	if (!cart.length) return <EmptyCart/>;
 
+	function handleGetPosition (e) {
+		e.preventDefault();
+		dispatch(fetchAddress());
+	}
+
 	return <div className={`px-3 py-6`}>
 		<h2 className={`text-xl font-semibold mb-8`}>Ready to order? Let's go!</h2>
-
-		<button onClick={() => dispatch(fetchAddress())}>GET POSITION</button>
 
 		<Form method="POST">
 			<FieldContainer label="First Name">
@@ -57,8 +62,18 @@ function CreateOrder () {
 
 			<FieldContainer label="Address">
 				<div className={`grow`}>
-					<input className="input w-full" type="text" name="address" required/>
+					<input
+						defaultValue={address}
+						disabled={isLoadingAddress}
+						className="input w-full"
+						type="text"
+						name="address"
+						required
+					/>
 				</div>
+				{!position.latitude && !position.longitude && <span className={`absolute right-1 z-50`}>
+					<Button disabled={isLoadingAddress} type="small" onClick={handleGetPosition}>GET POSITION</Button>
+				</span>}
 			</FieldContainer>
 
 			<div className={`mb-12 flex gap-5 items-center`}>
@@ -75,7 +90,7 @@ function CreateOrder () {
 
 			<div>
 				<input type="hidden" name="cart" value={JSON.stringify(cart)}/>
-				<Button type="primary" disabled={isSubmitting}>
+				<Button type="primary" disabled={isSubmitting || isLoadingAddress}>
 					{isSubmitting ? "Placing order..." : `Order now for ${formatCurrency(totalPrice)}`}
 				</Button>
 			</div>
