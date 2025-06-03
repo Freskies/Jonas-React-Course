@@ -7,22 +7,22 @@ const StyledMenu = styled.div`
 `;
 
 const StyledToggle = styled.button`
-  background: none;
-  border: none;
-  padding: 0.4rem;
-  border-radius: var(--border-radius-sm);
-  transform: translateX(0.8rem);
-  transition: all 0.2s;
+	background: none;
+	border: none;
+	padding: 0.4rem;
+	border-radius: var(--border-radius-sm);
+	transform: translateX(0.8rem);
+	transition: all 0.2s;
 
-  &:hover {
-    background-color: var(--color-grey-100);
-  }
+	&:hover {
+		background-color: var(--color-grey-100);
+	}
 
-  & svg {
-    width: 2.4rem;
-    height: 2.4rem;
-    color: var(--color-grey-700);
-  }
+	& svg {
+		width: 2.4rem;
+		height: 2.4rem;
+		color: var(--color-grey-700);
+	}
 `;
 
 const StyledList = styled.ul`
