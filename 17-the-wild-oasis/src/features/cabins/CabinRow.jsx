@@ -53,7 +53,9 @@ function CabinRow ({ cabin }) {
 	const { id: cabinId, image, name, maxCapacity, regularPrice, discount } = cabin;
 
 	function handleDuplicate () {
-		createCabin({ ...cabin, id: null, name: `${name} (copy)` });
+		const duplicateCabin = { ...cabin, name: `${name} (copy)` };
+		delete duplicateCabin.id;
+		createCabin(duplicateCabin)
 	}
 
 	return <>
@@ -64,7 +66,7 @@ function CabinRow ({ cabin }) {
 			<Price>{formatCurrency(regularPrice)}</Price>
 			{discount ? <Discount>{formatCurrency(discount)}</Discount> : <span>&mdash;</span>}
 			<div>
-				<button onClick={handleDuplicate}><HiSquare2Stack/></button>
+				<button disabled={isCreating} onClick={handleDuplicate}><HiSquare2Stack/></button>
 				<button onClick={() => setShowForm(show => !show)}><HiPencil/></button>
 				<button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}><HiTrash/></button>
 			</div>
