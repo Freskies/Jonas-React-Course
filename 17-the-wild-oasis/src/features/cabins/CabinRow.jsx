@@ -6,18 +6,19 @@ import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import useCreateCabin from "./useCreateCabin.js";
 import Modal from "../../ui/Modal.jsx";
 import ConfirmDelete from "../../ui/ConfirmDelete.jsx";
+import Table from "../../ui/Table.jsx";
 
-const TableRow = styled.div`
-	display: grid;
-	grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-	column-gap: 2.4rem;
-	align-items: center;
-	padding: 1.4rem 2.4rem;
-
-	&:not(&:last-child) {
-		border-bottom: 1px solid var(--color-grey-100);
-	}
-`;
+// const TableRow = styled.div`
+// 	display: grid;
+// 	grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
+// 	column-gap: 2.4rem;
+// 	align-items: center;
+// 	padding: 1.4rem 2.4rem;
+//
+// 	&:not(&:last-child) {
+// 		border-bottom: 1px solid var(--color-grey-100);
+// 	}
+// `;
 
 const Img = styled.img`
 	display: block;
@@ -59,7 +60,7 @@ function CabinRow ({ cabin }) {
 	}
 
 	return <>
-		<TableRow role={"row"}>
+		<Table.Row>
 			<Img src={image}/>
 			<Cabin>{name}</Cabin>
 			<div>Fits up to {maxCapacity} guests</div>
@@ -68,23 +69,23 @@ function CabinRow ({ cabin }) {
 			<div>
 				<button disabled={isCreating} onClick={handleDuplicate}><HiSquare2Stack/></button>
 				<Modal>
-					<Modal.Open name={`cabin-form-${cabinId}`}>
+					<Modal.Open name={`cabin-${cabinId}`}>
 						<button><HiPencil/></button>
 					</Modal.Open>
-					<Modal.Window name={`cabin-form-${cabinId}`}>
+					<Modal.Window name={`cabin-${cabinId}`}>
 						<CreateCabinForm cabinToEdit={cabin}/>
 					</Modal.Window>
 				</Modal>
 				<Modal>
-					<Modal.Open name={`delete-cabin-form-${cabinId}`}>
+					<Modal.Open name={`delete-cabin-${cabinId}`}>
 						<button disabled={isDeleting}><HiTrash/></button>
 					</Modal.Open>
-					<Modal.Window name={`delete-cabin-form-${cabinId}`}>
+					<Modal.Window name={`delete-cabin-${cabinId}`}>
 						<ConfirmDelete resourceName={name} onConfirm={() => deleteCabin(cabinId)} disabled={isDeleting}/>
 					</Modal.Window>
 				</Modal>
 			</div>
-		</TableRow>
+		</Table.Row>
 	</>;
 }
 
