@@ -3,14 +3,16 @@ import CreateCabinForm from "./CreateCabinForm.jsx";
 import Button from "../../ui/Button.jsx";
 
 function AddCabin () {
-	return <Modal>
-		<Modal.Open opens={"cabin-form"}>
-			{openModal => <Button onClick={() => openModal("cabin-form")}>Add new cabin</Button>}
-		</Modal.Open>
-		<Modal.Window name="cabin-form">
-			{closeModal => <CreateCabinForm onCloseModal={closeModal}/>}
-		</Modal.Window>
-	</Modal>;
+	return <div>
+		<Modal>
+			<Modal.Open name={"cabin-form"}>
+				<Button>Add new cabin</Button>
+			</Modal.Open>
+			<Modal.Window name="cabin-form">
+				<CreateCabinForm/>
+			</Modal.Window>
+		</Modal>
+	</div>;
 }
 
 export default AddCabin;

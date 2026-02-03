@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { HiXMark } from "react-icons/hi2";
 import { createPortal } from "react-dom";
-import { createContext, useContext, useState } from "react";
+import { cloneElement, createContext, useContext, useState } from "react";
 
 const StyledModal = styled.div`
 	position: fixed;
@@ -52,45 +52,47 @@ const Button = styled.button`
 	}
 `;
 
-const ModalContext = createContext(null);
+const ModalContext = createContext({});
 
 function useModal () {
-	const context = useContext(ModalContext);
-	if (!context) throw new Error("Modal hooks must be used within a Modal Provider");
-	return context;
+	return useContext(ModalContext);
 }
 
 function Modal ({ children }) {
-	const [openName, setOpenName] = useState("");
-	const close = () => setOpenName("");
-	const open = (name) => setOpenName(name);
+	const [name, setName] = useState("");
+	const open = (name) => setName(name);
+	const close = () => setName("");
 
 	return <ModalContext.Provider value={{
-		close,
+		name,
 		open,
-		openName,
+		close,
 	}}>
 		{children}
 	</ModalContext.Provider>;
 }
 
-function Open ({ opens: opensWindowName, children }) {
+function Open ({ children, name: windowName }) {
 	const { open } = useModal();
-	return children(() => open(opensWindowName));
+	return cloneElement(children, { onClick: () => open(windowName) });
 }
 
 function Window ({ name, children }) {
-	const { openName, close } = useModal();
+	const { name: openName, close } = useModal();
+
+	function handleClickOverlay (e) {
+		if (e.target === e.currentTarget) close();
+	}
 
 	if (name !== openName) return null;
 
 	return createPortal(
-		<Overlay>
+		<Overlay onClick={handleClickOverlay}>
 			<StyledModal>
 				<Button onClick={close}>
 					<HiXMark/>
 				</Button>
-				{children(close)}
+				{cloneElement(children, { handleCloseModal: close })}
 			</StyledModal>
 		</Overlay>,
 		document.querySelector("body"),
@@ -99,6 +101,5 @@ function Window ({ name, children }) {
 
 Modal.Open = Open;
 Modal.Window = Window;
-Modal.useModal = useModal;
 
 export default Modal;
