@@ -58,8 +58,8 @@ const Button = styled.button`
 		background-color: var(--color-brand-700);
 	}
 	
-	${({ size = "medium" }) => sizes[size]}
-	${({ variation = "primary" }) => variations[variation]}
+	${({ $size = "medium" }) => sizes[$size]}
+	${({ $variation = "primary" }) => variations[$variation]}
 `;
 
 export default Button;
