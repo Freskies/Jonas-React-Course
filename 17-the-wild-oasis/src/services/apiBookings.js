@@ -8,10 +8,18 @@ export async function getBooking (id) {
 		.eq("id", id)
 		.single();
 
-	if (error) {
-		console.error(error);
-		throw new Error("Booking not found");
-	}
+	if (error) throw new Error("Booking not found");
+
+	return data;
+}
+
+export async function getBookings () {
+	const { data, error } = await supabase
+		.from("bookings")
+		.select("id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice," +
+			"cabins(name), guests(fullName, email)");
+
+	if (error) throw new Error("Bookings could not get loaded");
 
 	return data;
 }
