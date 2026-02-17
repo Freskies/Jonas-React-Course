@@ -20,11 +20,13 @@ export default function useBookings () {
 	queryClient.prefetchQuery({
 		queryKey: ["bookings", filter, sortBy, page - 1],
 		queryFn: () => getBookings({ filter, sortBy, page: page - 1 }),
+		retry: false,
 	}).catch(() => null);
 
 	queryClient.prefetchQuery({
 		queryKey: ["bookings", filter, sortBy, page + 1],
 		queryFn: () => getBookings({ filter, sortBy, page: page + 1 }),
+		retry: false,
 	}).catch(() => null);
 
 	return { isPending, bookings, count, error };
