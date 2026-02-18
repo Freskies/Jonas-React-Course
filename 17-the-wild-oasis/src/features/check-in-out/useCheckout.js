@@ -9,7 +9,7 @@ export function useCheckout () {
 		mutationFn: (bookingId) => updateBooking(bookingId, { status: "checked-out" }),
 		onSuccess: (data) => {
 			toast.success(`Booking #${data.id} checked out successfully!`);
-			queryClient.invalidateQueries().then(() => null);
+			queryClient.invalidateQueries({ queryKey: ["bookings"] }).then(() => null);
 		},
 		onError: () => toast.error(`There was an error checking out the booking`),
 	});
